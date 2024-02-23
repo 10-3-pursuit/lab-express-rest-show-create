@@ -14,7 +14,6 @@ logs.get('/', (req, res) => {
 
 logs.get('/:id', (req, res) => {
   const { id } = req.params
-
   const log = logsArray.find((log)=> log.id === +id)
 
   res.json({ log })
