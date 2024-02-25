@@ -1,5 +1,5 @@
 const express = require('express');
-const logs = express.Router();
+const logs = express.Router(); // each resource must have it's own router
 const logsData = require('../models/logs.model');
 
 logs.get('/', (req, res) => {
@@ -17,7 +17,7 @@ logs.post('/', (req, res) => {
     req.body.id = newId; // add this new id to incoming req.body bc it won't have an id
     logsData.push(req.body);
     // always send back response with object of data so developer can reset data in react using useState
-    res.json({logs:logsData});
+    res.json({ logs: logsData });
 })
 
-module.exports = logs;
+module.exports = logs; // logs is an object - must be exported to be used throughout this application
