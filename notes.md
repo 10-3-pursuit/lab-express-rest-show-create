@@ -65,38 +65,34 @@ app.get('/another-route', (req, res) => {
 Remember, middleware execution order is critical in Express, and it follows the order of definition in your code.
 
 ## cURL
+**Doing a POST request currently won't modify the data in the server**
 
-curl http://localhost:3000/api/v1/tours will display the response in the terminal rather than using postamn (postamn is easier)
-
-To make a POST request to add a new tour using `curl` in your terminal, you would need to target the `/api/v1/tours` endpoint of your API. Assuming you are running the API locally and it is accessible at `http://localhost:3000/api/v1/tours`, and you want to add a new tour with specific details, you can use UNIX-like shell command on your MacBook Air, you can use single quotes for the entire JSON payload and double quotes for the keys and string values inside the JSON data:
-
-```bash
-curl -X POST http://localhost:3000/api/v1/tours -H 'Content-Type: application/json' -d '{"name":"Juli'"'"'s Tour","duration":5,"maxGroupSize":20,"difficulty":"easy","ratingsAverage":4.9,"ratingsQuantity":30,"price":500,"summary":"A summary of the new tour","description":"A detailed description of what the tour involves.","imageCover":"new-tour-cover.jpg","images":["new-tour-1.jpg","new-tour-2.jpg"],"startDates":["2024-04-25,10:00","2024-07-20,10:00"]}'
-```
-
-This command uses single quotes for the -d argument to avoid having to escape double quotes inside the JSON data. However, since you have Juli's Tour with an apostrophe in the name, which conflicts with the use of single quotes for the shell, the section around the apostrophe is broken into separate strings and concatenated. This technique uses '"'"' to effectively insert a single quote into the string: the first single quote ends the current string, then " starts a quoted string that contains a single quote, followed by another " to close that quoted string, and finally another single quote to restart the JSON string.
-
-The same command without the quote problem:
+To send the JSON object to the endpoint `http://localhost:3333/logs/` using `curl`, you'll open your terminal or command line interface and use the following command:
 
 ```bash
-curl -X POST http://localhost:3000/api/v1/tours -H 'Content-Type: application/json' -d '{"name":"Tour de Juli Part II","duration":5,"maxGroupSize":20,"difficulty":"easy","ratingsAverage":4.9,"ratingsQuantity":30,"price":500,"summary":"A summary of the new tour","description":"A detailed description of what the tour involves.","imageCover":"new-tour-cover.jpg","images":["new-tour-1.jpg","new-tour-2.jpg"],"startDates":["2024-04-27,10:00","2024-07-25,10:00"]}'
+curl -X POST http://localhost:3333/logs/ \
+-H "Content-Type: application/json" \
+-d '{"captainName": "Juli", "title": "What is sleep?", "post": "Never heard of it lol", "mistakesWereMadeToday": true, "daysSinceLastCrisis": 0}'
 ```
 
-Here's a breakdown of this command:
+This command will send a POST request to your local server running on port 3333 at the `/logs/` endpoint with the specified JSON data. Make sure your server is running and listening on port 3333 before executing this command!
 
-- `-X POST`: Specifies the request method, which is POST in this case.
-- `http://localhost:3000/api/v1/tours`: The URL where your request is being sent. Adjust the hostname and port as necessary for your environment.
-- `-H 'Content-Type: application/json'`: Sets the `Content-Type` header to `application/json` to indicate that the request body is formatted as JSON.
-- `-d '{...}'`: The data payload of your POST request. Replace the placeholder content with the actual details of the new tour you want to add. Make sure the JSON is properly formatted.
+Yes, the `curl` request was successful. The server responded with a JSON object that includes an array of `logs`, with the last entry showing the data you sent:
 
-This command sends a POST request to the server, instructing it to create a new tour resource with the details provided in the JSON payload. If successful, the server should respond with a `201 Created` status code and a JSON response containing the details of the newly created tour, as per your `createTour` function's implementation.
-
-if successful Terminal looks like this:
-
-```bash
-julissagarcia@Julissas-MacBook-Air starter % curl -X POST http://localhost:3000/api/v1/tours -H 'Content-Type: application/json' -d '{"name":"Tour de Juli Part II","duration":5,"maxGroupSize":20,"difficulty":"easy","ratingsAverage":4.9,"ratingsQuantity":30,"price":500,"summary":"A summary of the new tour","description":"A detailed description of what the tour involves.","imageCover":"new-tour-cover.jpg","images":["new-tour-1.jpg","new-tour-2.jpg"],"startDates":["2024-04-27,10:00","2024-07-25,10:00"]}'
-{"status":"success","data":{"tour":{"id":12,"name":"Tour de Juli Part II","duration":5,"maxGroupSize":20,"difficulty":"easy","ratingsAverage":4.9,"ratingsQuantity":30,"price":500,"summary":"A summary of the new tour","description":"A detailed description of what the tour involves.","imageCover":"new-tour-cover.jpg","images":["new-tour-1.jpg","new-tour-2.jpg"],"startDates":["2024-04-27,10:00","2024-07-25,10:00"]}}}%
+```json
+{
+  "captainName": "Juli",
+  "title": "What is sleep?",
+  "post": "Never heard of it lol",
+  "mistakesWereMadeToday": true,
+  "daysSinceLastCrisis": 0,
+  "id": 8
+}
 ```
+
+This indicates that the server successfully received your POST request, processed it, and added your new log entry to its collection. The new entry has been assigned an `id` of `8`, which typically signifies that it has been stored successfully and can be uniquely identified within the system. The response doesn't explicitly state a status code because `curl` in its default mode does not show HTTP status codes unless you include the `-i`, `-I`, or `-v` flag. However, the JSON response content clearly indicates a successful operation.
+
+
 ## Quiz
 
 Here's a test to assess your understanding of the provided code, including the concepts and syntax related to Express.js and Node.js project setup:
