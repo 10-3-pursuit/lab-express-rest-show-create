@@ -6,6 +6,7 @@ const app = express();
 const logsController = require("./controllers/logs.controller");
 
 app.use(cors());
+app.use(express.json());
 
 app.use("/logs", logsController);
 
