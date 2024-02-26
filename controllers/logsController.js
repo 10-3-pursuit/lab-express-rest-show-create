@@ -27,6 +27,15 @@ logs.get("/", (req, res) => {
     res.json({ logs: logsArray })
   });
 
+  logs.put('/:id', (req, res) => {
+    const { id } = req.params
+    const logIndex = logsArray.findIndex((log) => log.id === +id)
+    if(logIndex > -1){
+        logsArray[logIndex] = req.body
+    }
+    res.json({ logs: logsArray })
+  })
+
 
 
   module.exports = logs;
