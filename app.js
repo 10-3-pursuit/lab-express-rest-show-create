@@ -6,6 +6,8 @@ const cors = require("cors"); // npm i cors then import for frontend to work pro
 //config
 const app = express();
 
+// logs dependency and middleware for controllers (read synchronously so best to import before the middleware)
+const logsController = require('./controllers/logs.controller');
 //middleware packages
 // middleware for incoming requests to parse to json - Returns middleware that only parses json and only looks at requests where the Content-Type header matches the type option
 app.use(cors());
@@ -17,8 +19,7 @@ app.get('/', (req, res) => {
     res.status(200).json({ "message" : "Hello, World! :-]" })
 });
 
-// logs dependency and middleware for controllers
-const logsController = require('./controllers/logs.controller');
+
 app.use('/logs', logsController);
 
 // 404 page

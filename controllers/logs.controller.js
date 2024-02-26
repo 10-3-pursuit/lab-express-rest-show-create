@@ -20,22 +20,19 @@ logs.post('/', (req, res) => {
     res.json({ logs: logsData });
 })
 
-// delete fx works but doesn't persist unless parsed to JSON and data exists in JSON or database
-logs.delete('/:id', (req, res) => {
+logs.put("/:id", (req, res) => {
     const { id } = req.params;
-    // const id = parseInt(req.params.id, 10); // Convert to number for accurate comparison (second param is for base 10)
-    const index = logsData.findIndex(log => log.id === +id); // Find the log by ID
-    if (index === -1) { // when log not found .findIndex returns -1
-        return res.status(404).json({
-            status: 'fail',
-            message: 'Invalid ID'
-        });
-    }
-    logsData.splice(index, 1); // Delete the log from the array if found
-    res.status(204).json({
-        status: 'success',
-        data: null // indicate the deletion was successful
-    });
+    const logIndex = logsData.findIndex((log) => log.id === +id);
+    if (logIndex > -1) logsData[logIndex] = req.body;
+    // in frontend setLog data (useState hook) will reset the state of the data so the data needs to be sent back
+    res.json({ logs: logsData });
 });
+
+logs.delete("/:id", (req, res) => {
+    const { id } = req.params;
+    // reassigning logsData to a different value
+    logsData = logsData.filter((log) => log.id !== +id); // return everything except the object with selected id that matches value of id key in data
+    res.json({ logs: logsData });
+})
 
 module.exports = logs; // logs is an object - must be exported to be used throughout this application
