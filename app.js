@@ -18,6 +18,8 @@ app.get('/', (req, res) => {
 
 
 
+
+
 app.get('*', () => {
     res.json({ error: "page not found"})
 })
