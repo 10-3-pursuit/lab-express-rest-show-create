@@ -20,4 +20,22 @@ logs.post('/', (req, res) => {
     res.json({ logs: logsData });
 })
 
+// delete fx works but doesn't persist unless parsed to JSON and data exists in JSON or database
+logs.delete('/:id', (req, res) => {
+    const { id } = req.params;
+    // const id = parseInt(req.params.id, 10); // Convert to number for accurate comparison (second param is for base 10)
+    const index = logsData.findIndex(log => log.id === +id); // Find the log by ID
+    if (index === -1) { // when log not found .findIndex returns -1
+        return res.status(404).json({
+            status: 'fail',
+            message: 'Invalid ID'
+        });
+    }
+    logsData.splice(index, 1); // Delete the log from the array if found
+    res.status(204).json({
+        status: 'success',
+        data: null // indicate the deletion was successful
+    });
+});
+
 module.exports = logs; // logs is an object - must be exported to be used throughout this application

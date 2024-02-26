@@ -1,6 +1,17 @@
 # Notes for Express.js Backend
 There's a test at the end!
 
+## fs
+
+This is to convert JSON file in server to be used within server?
+
+```js
+const fs = require('fs'); // works with json.parse (turns data into Javascript obj) and json.stringify(turns into string)
+
+JSON.parse( // to turn the following into a javascript object to be used in next lines of code
+    fs.readFileSync(`path to JSON file in Express.js server`)
+)
+```
 ## Middleware
 
 To mount middleware functions in your Express app, you will use the Express function app.use().

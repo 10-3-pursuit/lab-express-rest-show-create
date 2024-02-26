@@ -2,6 +2,7 @@
 const express = require('express');
 const cors = require("cors"); // npm i cors then import for frontend to work properly regarding PORT
 
+
 //config
 const app = express();
 
