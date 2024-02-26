@@ -5,7 +5,7 @@ const express = require('express')
 const logs = express.Router()
 
 // I want to return the data as json from the model using my controller
-const logsArray = require('../models/logs.model.js')
+let logsArray = require('../models/logs.model.js')
 
 //creeate get route to return json data to the client
 logs.get('/', (req, res) => {
@@ -14,11 +14,17 @@ logs.get('/', (req, res) => {
 
 logs.get('/:id', (req, res) => {
   const { id } = req.params
-  const log = logsArray.find((log)=> log.id === +id)
 
-  res.json({ log })
+  isId = logsArray.find((log) => log.id === +id)
+
+  if(isId){
+    const log = logsArray.find((log)=> log.id === +id)
+    res.json({ log })
+  }else{
+    res.redirect("/ID-Not_found")
+    // res.status(404).json({ error: `Log with the ID ${id} not found` });
+  }
 });
-
 
 logs.post("/", (req, res) => {
 
@@ -34,6 +40,33 @@ logs.post("/", (req, res) => {
 
   // send back all the logs becuase i plan to reset the logs
   res.json({ logs: logsArray });
+});
+
+//Updates a log
+logs.put("/:id", (req, res) => {
+  const { id } = req.params;
+  const logsIndex = logsArray.findIndex((log) => log.id === +id);
+  if (logsIndex > -1) logsArray[logsIndex] = req.body;
+  if(logsIndex === -1){
+      res.redirect("/ID-Not_found")
+    }else{
+    // send back all the logs because I plan to reset the  state
+    res.json({ logs: logsArray });
+  }
+});
+
+// to delete a single Log
+logs.delete("/:id", (req, res) => {
+    const { id } = req.params;
+    isId = logsArray.find((log) => log.id === +id)
+
+    if(isId){
+
+      logsArray = logsArray.filter((log) => log.id !== +id);
+      res.json({ logs: logsArray });
+    }else{
+      res.redirect("/ID-Not_found")
+    }
 });
 
 // export line 5 logs variable to be used in the app.js file

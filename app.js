@@ -24,8 +24,8 @@ app.get('/', (req, res) => {
 
 // 404 PAGE
 app.get('*', (req, res) => {
-  res.json({ error: 'Page not found' })
-})
+  res.status(404).json({ error: 'Log not found' });
+});
 
 // EXPORT
 module.exports = app
