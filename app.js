@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 //MIDDLEWARE FOR CONTROLLERS
-app.use("/logs", logsController);
+app.use("/api/logs", logsController);
 
 // ROUTES
 app.get("/", (req, res) => {

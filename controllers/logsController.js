@@ -28,13 +28,18 @@ logs.get("/", (req, res) => {
   });
 
   logs.put('/:id', (req, res) => {
+
     const { id } = req.params
     const logIndex = logsArray.findIndex((log) => log.id === +id)
     if(logIndex > -1){
         logsArray[logIndex] = req.body
+        res.json({ logs: logsArray })
+    } else {
+        res.json({ message: "Log not found" })
     }
-    res.json({ logs: logsArray })
   })
+
+
 
 
 
