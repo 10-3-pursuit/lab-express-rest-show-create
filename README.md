@@ -244,3 +244,8 @@ Add functionality where if a user goes to
 
 - Add Routes using `react-router-dom@6.2.1`
 - Add CSS
+
+
+## Link for frontend repo
+
+[lab-express-crud-frontend](https://github.com/TimNatal1887/lab-express-crud-frontend)
