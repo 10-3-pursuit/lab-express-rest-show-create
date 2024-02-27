@@ -3,7 +3,7 @@ const express = require("express");
 const logs = express.Router();
 
 
-const logsArray = require("../models/logsModel");
+let logsArray = require("../models/logsModel");
 
 logs.get('/', (req, res) => {
     res.json({ logs: logsArray})
@@ -17,9 +17,6 @@ logs.get("/:id", (req, res) => {
     res.json({ log })
 })
 
-
-
-
 logs.post("/", (req, res) => {
     const newId = logsArray[logsArray.length - 1].id + 1;
     
@@ -29,5 +26,15 @@ logs.post("/", (req, res) => {
     logsArray.push(req.body)
     res.json({ logs: logsArray })
 })
+
+
+logs.delete("/:id", (req, res) => {
+    const { id } = req.params
+
+    logsArray = logsArray.filter((log) => log.id !== +id)
+
+    res.json({ logs: logsArray});
+})
+
 
 module.exports = logs
