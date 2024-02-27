@@ -1,3 +1,8 @@
+# frontend github link
+[link to github](https://github.com/MichaelARestrepoross/lab-express-crud-frontend)
+
+[link to pull request](https://github.com/10-3-pursuit/lab-express-crud-frontend/pull/2) 
+
 # Captain's Log
 
 ![](https://cdn.shopify.com/s/files/1/2256/1635/products/4520_c-01.jpg?v=1510506828)
