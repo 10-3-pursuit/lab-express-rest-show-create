@@ -58,7 +58,4 @@ logs.get("/", (req, res) => {
     }
   })
 
-
-
-
   module.exports = logs;
