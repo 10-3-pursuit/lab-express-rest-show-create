@@ -21,8 +21,8 @@ logs.get('/:id', (req, res) => {
     const log = logsArray.find((log)=> log.id === +id)
     res.json({ log })
   }else{
-    res.redirect("/ID-Not_found")
-    // res.status(404).json({ error: `Log with the ID ${id} not found` });
+    
+    res.status(404).json({ status:404 , error: `Log with the ID ${id} not found` });
   }
 });
 
@@ -48,7 +48,7 @@ logs.put("/:id", (req, res) => {
   const logsIndex = logsArray.findIndex((log) => log.id === +id);
   if (logsIndex > -1) logsArray[logsIndex] = req.body;
   if(logsIndex === -1){
-      res.redirect("/ID-Not_found")
+      res.status(404).json({ status:404 , error: `Log with the ID ${id} not found` })
     }else{
     // send back all the logs because I plan to reset the  state
     res.json({ logs: logsArray });
@@ -65,7 +65,7 @@ logs.delete("/:id", (req, res) => {
       logsArray = logsArray.filter((log) => log.id !== +id);
       res.json({ logs: logsArray });
     }else{
-      res.redirect("/ID-Not_found")
+      res.status(404).json({ status:404 , error: `Log with the ID ${id} to delete not found` });
     }
 });
 
