@@ -5,7 +5,7 @@ const express = require("express");
 const logs = express.Router();
 
 // we need to return the data from the model using our controller
-const logsArray = require("../models/logs.model.js");
+let logsArray = require("../models/logs.model.js");
 
 // create get route to return json to the client
 logs.get("/", (req, res) => {
@@ -15,7 +15,7 @@ logs.get("/", (req, res) => {
 //create get route to return json for a specific log of a given id
 logs.get("/:id", (req, res) => {
   const { id } = req.params;
-  const logs = logsArray.find((log) => log.id === +id);
+  const logs = logsArray.find((log) => log.id !== +id);
   res.json({ logs });
 });
 
@@ -26,6 +26,14 @@ logs.post("/", (req, res) => {
   req.body.id = newId;
   // because our data is of the type array I push to the array
   logsArray.push(req.body);
+  res.json({ logs: logsArray });
+});
+
+logs.delete("/:id", (req, res) => {
+  const { id } = req.params;
+
+  logsArray = logsArray.filter((log) => log.id !== +id);
+
   res.json({ logs: logsArray });
 });
 
