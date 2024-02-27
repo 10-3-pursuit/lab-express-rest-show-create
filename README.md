@@ -1,4 +1,4 @@
-# frontend github links
+# Frontend github links
 [link to github](https://github.com/MichaelARestrepoross/lab-express-crud-frontend)
 
 [link to pull request](https://github.com/10-3-pursuit/lab-express-crud-frontend/pull/2) 
