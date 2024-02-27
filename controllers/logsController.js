@@ -1,10 +1,23 @@
 const express = require("express");
 
-  function validateForm(req, res, next) {
-    if (!req.body.captainName || !req.body.title || !req.body.post)
-      res.status(400).json({ message: "Invalid Inputs" });
-    else next();
-  }
+  function validateForm(req, res, next){
+    const {captainName, title, post, mistakesWereMadeToday, daysSinceLastCrisis } = req.body
+
+    if (
+        !req.body.captainName || 
+        !req.body.title || 
+        !req.body.post ||
+        typeof captainName !== 'string' ||
+        typeof title !== 'string' ||
+        typeof post !== 'string' ||
+        typeof mistakesWereMadeToday !== 'boolean' ||
+        typeof daysSinceLastCrisis !== 'number'
+      ) {
+        return res.status(400).json({ message: "Invalid Inputs" });
+      } else {
+        next()
+      }
+    }
 
 const logs = express.Router();
 
