@@ -1,7 +1,7 @@
 const express = require("express");
 
-function validateForm(req, res, next) {
-    if (!req.body.name || !req.body.category || !req.body.url)
+  function validateForm(req, res, next) {
+    if (!req.body.captainName || !req.body.title || !req.body.post)
       res.status(400).json({ message: "Invalid Inputs" });
     else next();
   }
