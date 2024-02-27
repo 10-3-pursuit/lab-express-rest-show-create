@@ -18,8 +18,7 @@ app.get("/", (req, res) => {
     res.send("Welcome to Captain's Log");
   });
 
-
-
+//   QUERIES
 app.get("/api/logs",  (req, res) => {
     const { captainname, order, mistakes, lastCrisis } = req.query
 
@@ -42,12 +41,9 @@ app.get("/api/logs",  (req, res) => {
         }
     } else if(mistakes){
         mistakesString = mistakes.toString()
-        if(mistakesString === "true" ){
-            const filteredTrueLogs = logsArray.filter((log) => log.mistakesWereMadeToday.toString() === "true")
+        if(mistakesString){
+            const filteredTrueLogs = logsArray.filter((log) => log.mistakesWereMadeToday.toString() === mistakesString)
             res.json({ logs: filteredTrueLogs })
-        } else if(mistakesString === "false"){
-            const filteredFalseLogs = logsArray.filter((log) => log.mistakesWereMadeToday.toString() === "false")
-            res.json({ logs: filteredFalseLogs })
         } else {
             res.json({ message: "Invalid input."})
         }
