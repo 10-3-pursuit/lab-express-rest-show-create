@@ -4,9 +4,9 @@ const express = require("express");
     const {captainName, title, post, mistakesWereMadeToday, daysSinceLastCrisis } = req.body
 
     if (
-        !req.body.captainName || 
-        !req.body.title || 
-        !req.body.post ||
+        !captainName || 
+        !title || 
+        !post ||
         typeof captainName !== 'string' ||
         typeof title !== 'string' ||
         typeof post !== 'string' ||
