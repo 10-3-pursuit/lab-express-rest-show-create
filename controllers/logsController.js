@@ -1,4 +1,4 @@
-// we need to import express to create the router for the resource. In this case the resource is bookmarks.
+// we need to import express to create the router for the resource. In this case the resource is logs.
 const express = require("express");
 
 // we need to create a Router which is a way to reference in app.js this file
@@ -15,20 +15,33 @@ logs.get("/", (req, res) => {
 //create get route to return json for a specific log of a given id
 logs.get("/:id", (req, res) => {
   const { id } = req.params;
-  const logs = logsArray.find((log) => log.id !== +id);
-  res.json({ logs });
+  const log = logsArray.find((log) => log.id === +id);
+  res.json({ log });
 });
 
 //create a route for POST
 logs.post("/", (req, res) => {
-  // need to fake create a new id. will take the last id number in the bookmarks array and add 1
+  // need to fake create a new id. will take the last id number in the logss array and add 1
   const newId = logsArray[logsArray.length - 1].id + 1;
   req.body.id = newId;
-  // because our data is of the type array I push to the array
+  //data is an array data type so we can push into the array
   logsArray.push(req.body);
   res.json({ logs: logsArray });
 });
 
+// put route
+logs.put("/:id", (req, res) => {
+  const { id } = req.params;
+
+  const logIndex = logsArray.findIndex((log) => log.id === +id);
+
+  if (logIndex > -1) logsArray[logIndex] = req.body;
+
+  // send back all the bookmarks because I plan to reset the setLogs state
+  res.json({ logs: logsArray });
+});
+
+// delete route
 logs.delete("/:id", (req, res) => {
   const { id } = req.params;
 
@@ -37,5 +50,5 @@ logs.delete("/:id", (req, res) => {
   res.json({ logs: logsArray });
 });
 
-// export bookmarks varidable to be used in the app.js file
+// export logs variable to be used in the app.js file
 module.exports = logs;
