@@ -1,5 +1,11 @@
 const express = require("express");
 
+const validateForm = (req, res, next) => {
+    if(!req.body.captainName || !req.body.title || !req.body.post)
+        res.status(400).json({ message: "invalid Inputs" });
+    else next();
+}
+
 const logs = express.Router();
 
 
@@ -17,13 +23,22 @@ logs.get("/:id", (req, res) => {
     res.json({ log })
 })
 
-logs.post("/", (req, res) => {
+logs.post("/", validateForm, (req, res) => {
     const newId = logsArray[logsArray.length - 1].id + 1;
     
     req.body.id = newId
-    console.log(req.body)
 
     logsArray.push(req.body)
+    res.json({ logs: logsArray })
+})
+
+logs.put("/:id", (req, res) => {
+    const { id } = req.params;
+
+    const logIndex = logsArray.findIndex((log) => log.id === +id)
+
+    if (logIndex > -1) logsArray[logIndex] = req.body;
+
     res.json({ logs: logsArray })
 })
 
