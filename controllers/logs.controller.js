@@ -2,7 +2,7 @@ const express = require("express")
 
 const logs = express.Router()
 
-const logsArray = require("../models/logs.model.js")
+let logsArray = require("../models/logs.model.js")
 
 //Routes
 logs.get("/", (req, res) => {
@@ -24,5 +24,19 @@ logs.post("/", (req, res) => {
     // FINALLY SERVER SENDS BACK A RESPONSE TO THE CLIENT.
     res.json({ logs: logsArray});
 })
+logs.put("/:id", (req, res) => {
+    const { id } = req.params
+    const logIndex = logsArray.findIndex((log) => log.id === +id);
+    if (logIndex> -1) logsArray[logIndex] = req.body;
+    res.json ({ logs: logsArray})
+})
+
+
+logs.delete("/:id", (req, res) => {
+    const {id} = req.params;
+    logsArray = logsArray.filter((log) => log.id !== +id);
+    res.json({ logs: logsArray})
+})
+
 
 module.exports = logs
