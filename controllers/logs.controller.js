@@ -1,5 +1,5 @@
 const express = require('express');
-const logs = express.Router(); // each resource must have it's own router
+const logs = express.Router(); // each resource must have it's own router - this is an object that creates all of the routes
 const logsData = require('../models/logs.model');
 
 logs.get('/', (req, res) => {
@@ -30,9 +30,9 @@ logs.put("/:id", (req, res) => {
 
 logs.delete("/:id", (req, res) => {
     const { id } = req.params;
-    // reassigning logsData to a different value
-    logsData = logsData.filter((log) => log.id !== +id); // return everything except the object with selected id that matches value of id key in data
-    res.json({ logs: logsData });
+    // reassigning logsData to a different value - can't because variable is a const
+    const newLogsData = logsData.filter((log) => log.id !== +id); // return everything except the object with selected id that matches value of id key in data
+    res.json({ logs: newLogsData });
 })
 
 module.exports = logs; // logs is an object - must be exported to be used throughout this application

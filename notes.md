@@ -81,8 +81,8 @@ Remember, middleware execution order is critical in Express, and it follows the 
 To send the JSON object to the endpoint `http://localhost:3333/logs/` using `curl`, you'll open your terminal or command line interface and use the following command:
 
 ```bash
-curl -X POST http://localhost:3333/logs/ \
--H "Content-Type: application/json" \
+curl -X POST http://localhost:3333/logs/ 
+-H "Content-Type: application/json" 
 -d '{"captainName": "Juli", "title": "What is sleep?", "post": "Never heard of it lol", "mistakesWereMadeToday": true, "daysSinceLastCrisis": 0}'
 ```
 
